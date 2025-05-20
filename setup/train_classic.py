@@ -1,12 +1,11 @@
 import pandas as pd
 import joblib
-from .dataset import get_as_pandas
+from dataset import get_as_pandas
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import classification_report, accuracy_score
 
 df = get_as_pandas('train')
 
@@ -37,4 +36,4 @@ pipeline = Pipeline([
 pipeline.fit(X_train, y_train)
 
 joblib.dump(pipeline, './model_classic.joblib')
-print("Model saved to './model_classic.joblib'")
+print("Classic model saved to './model_classic.joblib'")
