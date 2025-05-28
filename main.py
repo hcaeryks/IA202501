@@ -3,8 +3,8 @@ import subprocess
 from pathlib import Path
 
 def check_and_train_models():
-    classic_model_exists = os.path.exists('model_classic.joblib')
-    modern_model_exists = os.path.exists('model_modern.pak')
+    classic_model_exists = os.path.exists('model_classic.pkl')
+    modern_model_exists = True #os.path.exists('model_modern.pak')
 
     if not classic_model_exists:
         print("Classic model not found. Training classic model...")
@@ -17,7 +17,7 @@ def check_and_train_models():
 
     if not modern_model_exists:
         print("Modern model not found. Training modern model...")
-        try:
+        try:     
             subprocess.run(['python', '-m', 'setup.train_modern'], check=True)
             print("Modern model training completed.")
         except subprocess.CalledProcessError as e:

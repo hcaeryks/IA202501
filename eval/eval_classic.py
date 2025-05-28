@@ -1,16 +1,20 @@
 import joblib
 from dataset import get_as_pandas
+from preprocessing import preprocess_text
 from sklearn.metrics import classification_report, accuracy_score
 
 df = get_as_pandas('test')
 
 X_test = df['text']
-emotion_cols = ['anger', 'disgust', 'fear', 'joy', 'sadness', 'surprise']
+emotion_cols = ['anger', 'fear', 'joy', 'sadness', 'surprise']
 y_test = df[emotion_cols]
 
-pipeline = joblib.load('model_classic.joblib')
+# Preprocess the test data using the same function as training
+X_test_processed = preprocess_text(X_test)
 
-y_pred = pipeline.predict(X_test)
+pipeline = joblib.load('./model_classic.joblib')
+
+y_pred = pipeline.predict(X_test_processed)
 
 print("\n\n\nClassic model evaluation:\n\n\n ")
 
