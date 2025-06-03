@@ -4,7 +4,7 @@ from pathlib import Path
 
 def check_and_train_models():
     classic_model_exists = os.path.exists('model_classic.pkl')
-    modern_model_exists = True #os.path.exists('model_modern.pak')
+    modern_model_exists = os.path.exists('model_modern.pak')
 
     if not classic_model_exists:
         print("Classic model not found. Training classic model...")
