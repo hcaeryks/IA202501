@@ -20,7 +20,19 @@ WORKDIR /app
 COPY . .
 
 RUN pip install --upgrade pip
-RUN pip install transformers==4.38.0 torch accelerate==0.21.0 pandas scikit-learn datasets joblib
 
+# Install compatible versions based on user's environment
+RUN pip install \
+    transformers==4.38.0 \
+    torch>=2.0.0 \
+    accelerate>=1.8.0 \
+    pandas>=1.5.0 \
+    scikit-learn>=1.0.0 \
+    datasets>=2.0.0 \
+    joblib>=1.0.0 \
+    numpy>=1.21.0
+
+# Create necessary directories
+RUN mkdir -p logs results_modern results_classic
 
 CMD ["python", "main.py"]

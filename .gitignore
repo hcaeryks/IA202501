@@ -1,6 +1,8 @@
 # Project-specific stuff
 model_classic.joblib
 model_modern.pak
+model_modern/
+results_modern/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,6 +1,6 @@
 from dataset import get_as_pandas
 from preprocessing import preprocess_text
-from transformers import BertTokenizerFast, BertForSequenceClassification
+from transformers import DistilBertTokenizerFast, DistilBertForSequenceClassification
 import torch
 from sklearn.metrics import classification_report, accuracy_score
 import numpy as np
@@ -11,8 +11,8 @@ emotion_cols = ['anger', 'fear', 'joy', 'sadness', 'surprise']
 y_test = df[emotion_cols].values
 
 model_path = './model_modern'
-tokenizer = BertTokenizerFast.from_pretrained(model_path)
-model = BertForSequenceClassification.from_pretrained(model_path)
+tokenizer = DistilBertTokenizerFast.from_pretrained(model_path)
+model = DistilBertForSequenceClassification.from_pretrained(model_path)
 
 model.eval()
 
@@ -20,7 +20,7 @@ inputs = tokenizer(
     X_test,
     padding=True,
     truncation=True,
-    max_length=128,
+    max_length=430,
     return_tensors='pt'
 )
 
@@ -33,10 +33,10 @@ probs = torch.sigmoid(logits)
 threshold = 0.5
 y_pred = (probs.numpy() >= threshold).astype(int)
 
-print("\n\nModern model evaluation:\n\n")
+print("\n\n\nModern model evaluation:\n\n\n ")
 
 accuracy = accuracy_score(y_test, y_pred)
-print(f"Exact match accuracy: {accuracy:.4f}\n")
+print(f"Exact match accuracy: {accuracy:.4f}")
 
 report = classification_report(y_test, y_pred, target_names=emotion_cols)
 print("Classification report:\n", report)

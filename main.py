@@ -3,8 +3,8 @@ import subprocess
 from pathlib import Path
 
 def check_and_train_models():
-    classic_model_exists = os.path.exists('model_classic.pkl')
-    modern_model_exists = os.path.exists('model_modern.pak')
+    classic_model_exists = os.path.exists('model_classic.joblib')
+    modern_model_exists = os.path.exists('model_modern') and os.path.isdir('model_modern')
 
     if not classic_model_exists:
         print("Classic model not found. Training classic model...")
@@ -27,7 +27,7 @@ def check_and_train_models():
     return True
 
 def evaluate_models():
-    subprocess.run(['python', '-m', 'eval.eval_classic'], check=True)
+    #subprocess.run(['python', '-m', 'eval.eval_classic'], check=True)
     subprocess.run(['python', '-m', 'eval.eval_modern'], check=True)
 
 def main():

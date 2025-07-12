@@ -23,7 +23,6 @@ def get_as_pandas(split: str):
         if pd.api.types.is_float_dtype(df[col]):
             if (df[col] == df[col].astype(int)).all():
                 df[col] = df[col].astype(int)
-    print(len(df))
     return df
 
 def get_as_dataset(split: str):

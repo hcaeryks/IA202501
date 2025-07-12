@@ -49,8 +49,6 @@ scorer = make_scorer(f1_score, average='micro')
 grid_search = GridSearchCV(pipeline, parameters, scoring=scorer, cv=3, n_jobs=-1)
 grid_search.fit(X_train, y_train)
 
-print(grid_search.best_params_)
-
 final_model = grid_search.best_estimator_
 
 try:

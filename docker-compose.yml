@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  emotion-detection:
+    build: .
+    container_name: emotion-detection-app
+    
+    # GPU acceleration (requires nvidia-docker)
+    runtime: nvidia
+    
+    # Volume mounts to persist models and data
+    volumes:
+      - ./data:/app/data:ro              # Mount data directory (read-only)
+      - ./models:/app/models             # Persist trained models
+      - ./logs:/app/logs                 # Persist training logs
+      - ./results_modern:/app/results_modern  # Persist training results
+      - ./results_classic:/app/results_classic
+    
+    # Environment variables for configuration
+    environment:
+      - PYTHONUNBUFFERED=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - CUDA_VISIBLE_DEVICES=0
+      - TORCH_HOME=/app/models/.torch    # Cache PyTorch models
+      - HF_HOME=/app/models/.huggingface # Cache HuggingFace models
+    
+    # Resource limits (adjust based on your system)
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    
+    # Network configuration
+    networks:
+      - emotion-net
+    
+    # Restart policy
+    restart: unless-stopped
+
+networks:
+  emotion-net:
+    driver: bridge
+
+volumes:
+  models:
+    driver: local
+  logs:
+    driver: local
