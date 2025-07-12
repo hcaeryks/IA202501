@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pkl
+*.joblib
+*.log
+*.csv
+model_classic.*
+model_modern/
+results_modern/
